@@ -1,0 +1,6 @@
+[submodule "gdrapier3d"]
+	path = gdrapier3d
+	url = https://github.com/Kethku/gdrapier3d
+[submodule "gdrollback"]
+	path = gdrollback
+	url = https://github.com/Kethku/gdrollback
