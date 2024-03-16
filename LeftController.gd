@@ -15,8 +15,8 @@ func _process(delta):
 func _on_input_float_changed(name, value):
 	print(name, value) # Replace with function body.
 	if name == "grip":
-		if value >= 0.5:
-			mesh.scale = Vector3.ONE * 2.0
+		if value >= 0:
+			mesh.scale = Vector3.ONE * (1 + value)
 		else:
 			mesh.scale = Vector3.ONE
 	
