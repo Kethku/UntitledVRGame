@@ -1,0 +1,10 @@
+[workspace]
+
+resolver = "2"
+members = [
+    "gdrapier3d",
+    "gdrollback",
+]
+
+[profile.dev.package.rapier3d]
+opt-level = 3
