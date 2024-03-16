@@ -15,6 +15,11 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+World="*res://autoloads/world.tscn"
+SyncManager="*res://autoloads/sync_manager.tscn"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
