@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://de0ugndwv1fyr"]
+[gd_scene load_steps=5 format=3 uid="uid://de0ugndwv1fyr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1obeh"]
+[ext_resource type="Script" path="res://LeftController.gd" id="2_mn10p"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0wcjv"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -16,12 +17,14 @@ script = ExtResource("1_1obeh")
 
 [node name="LeftController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"left_hand"
+script = ExtResource("2_mn10p")
 
 [node name="Mesh" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
 mesh = SubResource("BoxMesh_0wcjv")
 
 [node name="RightController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
+script = ExtResource("2_mn10p")
 
 [node name="Mesh" type="MeshInstance3D" parent="XROrigin3D/RightController"]
 mesh = SubResource("BoxMesh_0wcjv")
