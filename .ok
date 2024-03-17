@@ -1,5 +1,7 @@
 _start-editor: Godot_v4.2.1-stable_win64.exe -e
 _play: Godot_v4.2.1-stable_win64.exe
+host: ok build; Godot_v4.2.1-stable_win64.exe -- --host --port 11337
+join: ok build; Godot_v4.2.1-stable_win64.exe -- --join --address home.kaylees.dev --port 11337
 play: ok build; ok _play
 build: cargo build
 double: ok build; ok _play --position "0,0" ++ --host --port 11337; ok _play --position "1000,0" ++ --join --address home.kaylees.dev --port 11337
