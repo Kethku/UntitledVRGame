@@ -43,8 +43,6 @@ func _ready():
             SyncManager.update_ready(true)
 
 func _on_sync_manager_connected(id):
-    print("Player connected! %s" % id)
-
     if startup_action == "host" || startup_action == "join":
         await get_tree().create_timer(1.0).timeout
         SyncManager.update_ready(true)
