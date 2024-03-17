@@ -5,17 +5,23 @@
 [sub_resource type="BoxMesh" id="BoxMesh_32pus"]
 size = Vector3(0.3, 0.3, 0.3)
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("Head", "LeftHand", "RightHand")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("Camera", "Head", "LeftHand", "RightHand")]
 script = ExtResource("1_aywga")
+Camera = NodePath("Head/Camera3D")
 Head = NodePath("Head")
 LeftHand = NodePath("LeftHand")
 RightHand = NodePath("RightHand")
 
 [node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30008, 0)
 mesh = SubResource("BoxMesh_32pus")
 
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
 [node name="LeftHand" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.509005, 0.694846, 0)
 mesh = SubResource("BoxMesh_32pus")
 
 [node name="RightHand" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568373, 0.674017, 0)
 mesh = SubResource("BoxMesh_32pus")

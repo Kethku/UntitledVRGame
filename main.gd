@@ -1,18 +1,17 @@
 extends Node3D
 
+@onready var xr_scene: PackedScene = load("res://xr.tscn")
 @onready var player_puppet_scene: PackedScene = load("res://puppet.tscn")
-@onready var xr_origin = $/root/Main/XROrigin3D
+
+var local_player: Node3D
 
 var address: String = ""
 var port: String = ""
 # Default action is to run locally
 var startup_action = "local"
+var fake = false
 
 func _ready():
-    var xr_interface = XRServer.find_interface("OpenXR")
-    if xr_interface and xr_interface.initialize():
-        get_viewport().use_xr = true
-
     SyncManager.connected.connect(_on_sync_manager_connected)
     SyncManager.started.connect(_on_sync_manager_started)
 
@@ -24,6 +23,8 @@ func _ready():
             startup_action = "host"
         elif arg == "--join":
             startup_action = "join"
+        elif arg == "--fake":
+            fake = true
         elif arg == "--address":
             index += 1
             arg = args[index]
@@ -34,6 +35,8 @@ func _ready():
             port = arg
         index += 1
 
+    initialize_player(fake)
+    
     match startup_action:
         "host":
             SyncManager.host(int(port))
@@ -41,6 +44,20 @@ func _ready():
             SyncManager.join(address, int(port))
         "local":
             SyncManager.update_ready(true)
+
+func initialize_player(fake: bool):
+    var tree = get_tree()
+    var root = tree.root
+    if fake:
+        local_player = player_puppet_scene.instantiate()
+        root.add_child.call_deferred(local_player)
+    else:
+        local_player = xr_scene.instantiate()
+        root.add_child.call_deferred(local_player)
+        var xr_interface = XRServer.find_interface("OpenXR")
+        if xr_interface and xr_interface.initialize():
+            get_viewport().use_xr = true
+    local_player.Camera.current = true
 
 func _on_sync_manager_connected(id):
     if startup_action == "host" || startup_action == "join":
@@ -57,9 +74,9 @@ func _on_sync_manager_started():
     for id in SyncManager.ids():
         var spawn_point = spawn_points[player_index]
         if id == SyncManager.local_id():
-            xr_origin.transform = spawn_point.global_transform
-            xr_origin.local = true
-            xr_origin.id = id
+            local_player.transform = spawn_point.global_transform
+            local_player.local = true
+            local_player.id = id
         else:
             var state = { "id": id, "local": id == local_id, "transform": spawn_point.global_transform }
             SyncManager.spawn("PlayerPuppet", root, player_puppet_scene, state)

@@ -1,16 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://de0ugndwv1fyr"]
+[gd_scene load_steps=6 format=3 uid="uid://de0ugndwv1fyr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1obeh"]
-[ext_resource type="Script" path="res://Controller.gd" id="2_mn10p"]
-[ext_resource type="Script" path="res://Player.gd" id="2_yn40x"]
-[ext_resource type="Script" path="res://Headset.gd" id="3_5pj86"]
 [ext_resource type="Script" path="res://utils/SpawnPoint.gd" id="3_i60u6"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_0wcjv"]
-size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_m0kt2"]
 size = Vector3(20, 0.1, 20)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cxvq5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_f0sai"]
 
@@ -20,31 +16,6 @@ script = ExtResource("1_1obeh")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.611265, 0.791426, 0, -0.791426, 0.611265, 0, 1.89145, 0)
 shadow_enabled = true
-
-[node name="XROrigin3D" type="XROrigin3D" parent="." node_paths=PackedStringArray("LeftHand", "RightHand")]
-script = ExtResource("2_yn40x")
-LeftHand = NodePath("LeftHand")
-RightHand = NodePath("RightHand")
-
-[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
-script = ExtResource("3_5pj86")
-
-[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
-tracker = &"left_hand"
-script = ExtResource("2_mn10p")
-Left = true
-
-[node name="RightController" type="XRController3D" parent="XROrigin3D"]
-tracker = &"right_hand"
-script = ExtResource("2_mn10p")
-
-[node name="LeftHand" type="MeshInstance3D" parent="XROrigin3D"]
-mesh = SubResource("BoxMesh_0wcjv")
-skeleton = NodePath("../LeftController")
-
-[node name="RightHand" type="MeshInstance3D" parent="XROrigin3D"]
-mesh = SubResource("BoxMesh_0wcjv")
-skeleton = NodePath("../RightController")
 
 [node name="Floor" type="R3DRigidBody" parent="."]
 body_type = 2
@@ -58,11 +29,21 @@ dimensions = Vector3(20, 0.1, 20)
 
 [node name="SpawnPoint1" type="Node3D" parent="."]
 transform = Transform3D(-0.933499, 0, -0.35858, 0, 1, 0, 0.35858, 0, -0.933499, 5, 0, 4)
+visible = false
 script = ExtResource("3_i60u6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnPoint1"]
+transform = Transform3D(0.999341, -0.0124195, -0.0341224, 0, 0.939693, -0.34202, 0.0363123, 0.341795, 0.939073, 2.04059, -0.157376, -2.01999)
+mesh = SubResource("CapsuleMesh_cxvq5")
 
 [node name="SpawnPoint2" type="Node3D" parent="."]
 transform = Transform3D(0.323026, 0, 0.94639, 0, 1, 0, -0.94639, 0, 0.323026, -5, 0, -4)
+visible = false
 script = ExtResource("3_i60u6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnPoint2"]
+transform = Transform3D(0.999341, -0.0124195, -0.0341224, 0, 0.939693, -0.34202, 0.0363123, 0.341795, 0.939073, 0.0369761, -0.157376, -0.0696363)
+mesh = SubResource("CapsuleMesh_cxvq5")
 
 [node name="Box" type="R3DRigidBody" parent="."]
 transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 3.85759, 0.0731331, -2.5649)

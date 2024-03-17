@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var ball_scene: PackedScene = load("res://ball.tscn")
 
+@export var Camera: Camera3D
 @export var Head: Node3D
 @export var LeftHand: Node3D
 @export var RightHand: Node3D

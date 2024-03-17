@@ -5,5 +5,6 @@ join: ok build; Godot_v4.2.1-stable_win64.exe -- --join --address home.kaylees.d
 play: ok build; ok _play
 build: cargo build
 double: ok build; ok _play --position "0,0" ++ --host --port 11337; ok _play --position "1000,0" ++ --join --address home.kaylees.dev --port 11337
+double-local: ok build; ok _play --position "0,0" ++ --host --port 11337; ok _play --position "1000, 0" ++ --join --fake --address home.kaylees.dev --port 11337
 editor: ok build; ok _start-editor
 update-submodules: git submodule foreach git pull

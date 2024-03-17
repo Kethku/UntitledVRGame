@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b04q6fljnvf21"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_vq55l"]
+[ext_resource type="Script" path="res://Headset.gd" id="2_3cfk3"]
+[ext_resource type="Script" path="res://Controller.gd" id="3_i5k0o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sb176"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="XROrigin3D" type="XROrigin3D" node_paths=PackedStringArray("Camera", "LeftHand", "RightHand")]
+current = true
+script = ExtResource("1_vq55l")
+Camera = NodePath("XRCamera3D")
+LeftHand = NodePath("LeftHand")
+RightHand = NodePath("RightHand")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+current = true
+script = ExtResource("2_3cfk3")
+
+[node name="LeftController" type="XRController3D" parent="."]
+tracker = &"left_hand"
+script = ExtResource("3_i5k0o")
+Left = true
+
+[node name="RightController" type="XRController3D" parent="."]
+tracker = &"right_hand"
+script = ExtResource("3_i5k0o")
+
+[node name="LeftHand" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_sb176")
+skeleton = NodePath("../LeftController")
+
+[node name="RightHand" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_sb176")
+skeleton = NodePath("../RightController")
