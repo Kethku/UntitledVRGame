@@ -1,37 +1,215 @@
-[gd_scene load_steps=5 format=3 uid="uid://de0ugndwv1fyr"]
+[gd_scene load_steps=9 format=3 uid="uid://de0ugndwv1fyr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1obeh"]
 [ext_resource type="Script" path="res://Controller.gd" id="2_mn10p"]
+[ext_resource type="Script" path="res://Player.gd" id="2_yn40x"]
+[ext_resource type="Script" path="res://Headset.gd" id="3_5pj86"]
+[ext_resource type="Script" path="res://utils/SpawnPoint.gd" id="3_i60u6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0wcjv"]
 size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m0kt2"]
+size = Vector3(20, 0.1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_f0sai"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_1obeh")
 
-[node name="XROrigin3D" type="XROrigin3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.611265, 0.791426, 0, -0.791426, 0.611265, 0, 1.89145, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." node_paths=PackedStringArray("LeftHand", "RightHand")]
+script = ExtResource("2_yn40x")
+LeftHand = NodePath("LeftHand")
+RightHand = NodePath("RightHand")
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+script = ExtResource("3_5pj86")
 
 [node name="LeftController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"left_hand"
 script = ExtResource("2_mn10p")
-
-[node name="Mesh" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
-mesh = SubResource("BoxMesh_0wcjv")
+Left = true
 
 [node name="RightController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
 script = ExtResource("2_mn10p")
 
-[node name="Mesh" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+[node name="LeftHand" type="MeshInstance3D" parent="XROrigin3D"]
 mesh = SubResource("BoxMesh_0wcjv")
+skeleton = NodePath("../LeftController")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.435)
+[node name="RightHand" type="MeshInstance3D" parent="XROrigin3D"]
+mesh = SubResource("BoxMesh_0wcjv")
+skeleton = NodePath("../RightController")
+
+[node name="Floor" type="R3DRigidBody" parent="."]
+body_type = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_m0kt2")
+
+[node name="Collider" type="R3DCuboidCollider" parent="Floor"]
+dimensions = Vector3(20, 0.1, 20)
+
+[node name="SpawnPoint1" type="Node3D" parent="."]
+transform = Transform3D(-0.933499, 0, -0.35858, 0, 1, 0, 0.35858, 0, -0.933499, 5, 0, 4)
+script = ExtResource("3_i60u6")
+
+[node name="SpawnPoint2" type="Node3D" parent="."]
+transform = Transform3D(0.323026, 0, 0.94639, 0, 1, 0, -0.94639, 0, 0.323026, -5, 0, -4)
+script = ExtResource("3_i60u6")
+
+[node name="Box" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 3.85759, 0.0731331, -2.5649)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box"]
 mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.611265, 0.791426, 0, -0.791426, 0.611265, 0, 1.89145, 0)
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box2" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 4.71112, 0.0731331, -1.9113)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box2"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box2"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box3" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 5.53126, 0.0731331, -1.24857)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box3"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box3"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box4" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 2.99713, 0.0731331, -3.2214)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box4"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box4"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box5" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 2.11925, 0.0731331, -3.88362)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box5"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box5"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box6" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 5.15319, 1.13872, -1.54154)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box6"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box6"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box7" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 4.28274, 1.13097, -2.23766)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box7"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box7"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box8" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 3.45933, 1.12406, -2.89369)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box8"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box8"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box9" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 2.54651, 1.13934, -3.56175)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box9"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box9"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box10" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 4.71112, 2.18379, -1.9113)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box10"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box10"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box11" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 3.87545, 2.18184, -2.61069)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box11"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box11"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box12" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 2.9995, 2.15971, -3.29103)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box12"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box12"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box13" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 4.29635, 3.25013, -2.22135)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box13"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box13"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box14" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 3.4514, 3.29745, -2.91778)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box14"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box14"]
+dimensions = Vector3(1, 1, 1)
+
+[node name="Box15" type="R3DRigidBody" parent="."]
+transform = Transform3D(0.607972, 0, 0.793959, 0, 1, 0, -0.793959, 0, 0.607972, 3.85339, 4.36103, -2.51282)
+
+[node name="Mesh" type="MeshInstance3D" parent="Box15"]
+mesh = SubResource("BoxMesh_f0sai")
+skeleton = NodePath("../..")
+
+[node name="R3DCuboidCollider" type="R3DCuboidCollider" parent="Box15"]
+dimensions = Vector3(1, 1, 1)

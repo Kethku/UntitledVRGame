@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 World="*res://autoloads/world.tscn"
 SyncManager="*res://autoloads/sync_manager.tscn"
+InputManager="*res://autoloads/InputManagerAL.gd"
 
 [rendering]
 

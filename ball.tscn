@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0knatep2gmp8"]
+
+[ext_resource type="Script" path="res://ball.gd" id="1_og801"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmouu"]
+albedo_color = Color(0.290196, 0.486275, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_3yc1m"]
+material = SubResource("StandardMaterial3D_nmouu")
+radius = 0.1
+height = 0.2
+
+[node name="RigidBody" type="R3DRigidBody"]
+script = ExtResource("1_og801")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_3yc1m")
+
+[node name="R3DBallCollider" type="R3DBallCollider" parent="."]
+radius = 0.1
+density = 500.0
