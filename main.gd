@@ -77,6 +77,7 @@ func _on_sync_manager_started():
             local_player.transform = spawn_point.global_transform
             local_player.local = true
             local_player.id = id
+            local_player.fake = fake
         else:
             var state = { "id": id, "local": id == local_id, "transform": spawn_point.global_transform }
             SyncManager.spawn("PlayerPuppet", root, player_puppet_scene, state)

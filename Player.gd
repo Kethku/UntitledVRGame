@@ -11,6 +11,7 @@ var grab_damping: float = 0.75
 var grab_stiffness: float = 32.0
 
 var local: bool
+var fake: bool
 var id: String
 
 var left_grabbed: R3DRigidBody
@@ -18,6 +19,14 @@ var right_grabbed: R3DRigidBody
 
 func _ready():
     add_to_group("networked")
+
+var t = 0
+func _process(_delta):
+    if fake:
+        t += _delta
+        InputManager.set_head_state(Transform3D.IDENTITY.translated(Vector3.UP))
+        InputManager.set_hand_state(true, Transform3D.IDENTITY.translated(Vector3(cos(t * 2) * 0.2 - 0.3, sin(t * 2) * 0.2 + 0.5, -0.5)), false, false, 0.0, 0.0, Vector2.ZERO)
+        InputManager.set_hand_state(false, Transform3D.IDENTITY.translated(Vector3(cos(-t * 2) * 0.2 + 0.3, sin(-t * 2) * 0.2 + 0.5, -0.5)), false, false, 0.0, 0.0, Vector2.ZERO)
 
 func networked_spawn(state):
     local = state.local

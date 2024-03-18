@@ -28,7 +28,7 @@ mesh = SubResource("BoxMesh_m0kt2")
 dimensions = Vector3(20, 0.1, 20)
 
 [node name="SpawnPoint1" type="Node3D" parent="."]
-transform = Transform3D(-0.933499, 0, -0.35858, 0, 1, 0, 0.35858, 0, -0.933499, 5, 0, 4)
+transform = Transform3D(0.93358, 0, 0.358368, 0, 1, 0, -0.358368, 0, 0.93358, 5, 0, 4)
 visible = false
 script = ExtResource("3_i60u6")
 
@@ -37,7 +37,7 @@ transform = Transform3D(0.999341, -0.0124195, -0.0341224, 0, 0.939693, -0.34202,
 mesh = SubResource("CapsuleMesh_cxvq5")
 
 [node name="SpawnPoint2" type="Node3D" parent="."]
-transform = Transform3D(0.323026, 0, 0.94639, 0, 1, 0, -0.94639, 0, 0.323026, -5, 0, -4)
+transform = Transform3D(-0.322266, 0, -0.946649, 0, 1, 0, 0.946649, 0, -0.322266, -5, 0, -4)
 visible = false
 script = ExtResource("3_i60u6")
 
