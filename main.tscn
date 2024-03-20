@@ -33,7 +33,7 @@ visible = false
 script = ExtResource("3_i60u6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnPoint1"]
-transform = Transform3D(0.999341, -0.0124195, -0.0341224, 0, 0.939693, -0.34202, 0.0363123, 0.341795, 0.939073, 2.04059, -0.157376, -2.01999)
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_cxvq5")
 
 [node name="SpawnPoint2" type="Node3D" parent="."]
@@ -42,7 +42,7 @@ visible = false
 script = ExtResource("3_i60u6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnPoint2"]
-transform = Transform3D(0.999341, -0.0124195, -0.0341224, 0, 0.939693, -0.34202, 0.0363123, 0.341795, 0.939073, 0.0369761, -0.157376, -0.0696363)
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_cxvq5")
 
 [node name="Box" type="R3DRigidBody" parent="."]

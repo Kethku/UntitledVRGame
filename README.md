@@ -24,6 +24,8 @@ configured to load on startup. Current we use three:
 - `World`: The node that contains the physics world. It is
   defined in `./gdrapier3d/src/world.rs`.
 
+## Startup Flow
+
 `main.gd` is attached to the root of the default scene and
 is responsible for setting up the `SyncManager` and starting
 the game loop. On startup, `_ready` is called which hooks up
@@ -37,3 +39,30 @@ After connected to the remote player, the
 the player to one of the positions defined nodes in the
 `SpawnPoints` group, and spawns remote player puppets for
 the other connected peers.
+
+## `main.tscn`
+
+The main scene contains `R3DRigidBody` nodes for the floor,
+and stack of boxes, environment information to facilitate
+rendering, and a series of `Node3D` spawn point nodes to 
+define where players should spawn.
+
+The `R3DRigidBody` nodes automatically get added to the 
+`World` autoload when they are added to the tree (in this
+case on startup). There are `R3DCuboidColliders` and
+`MeshInstance3D` nodes as children for each of the boxes which
+also get automatically registered to their parent in the
+physics system. No code is necessary to network these
+objects beyond their base types.
+
+## `Player.gd`
+
+The majority of the actual logic in the current setup is
+defined in `Player.gd` which is responsible for updating the
+player hand and head mesh positions, and processing local
+input to spawn balls and update their positions while
+grabbed by the player.
+
+Since the spawned ball objects are `R3DRigidBody` nodes, we
+can use the functions on them like `add_force`,
+`apply_impulse` etc to move them around.
